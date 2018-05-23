@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20171016021817) do
     t.string "state"
     t.string "zip"
     t.date "listing_date"
-    t.integer "listing_price"
+    t.integer "listing_price" #???
     t.integer "listing_agent_id"
     t.date "selling_date"
     t.integer "selling_price"
