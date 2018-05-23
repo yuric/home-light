@@ -1,12 +1,22 @@
 h1 = @agent.full_name
 p = @agent.bio
 
-= link_to "Add Transaction", new_agent_uploaded_transaction_path(@agent), class: "btn btn-primary"
 
-h3 Recent Transactions
+div 
+  = form_tag import_agent_uploaded_transactions_path(@agent), multipart: true do
+    = file_field_tag :file
+    = submit_tag "Bulk Upload Transactions", class: "btn btn-primary"
+= link_to "Add Single Transaction", new_agent_uploaded_transaction_path(@agent), class: "btn btn-primary"
+
+
+h3 Recent Transactions 
+= link_to "Download Transactions ", agent_path(@agent, :format => "csv")
+
+
 table
   thead
     tr
+      th Age
       th Address
       th Listed
       th Listing Price
@@ -16,6 +26,7 @@ table
   tbody
     - @uploaded_transactions.each do |uploaded_transaction|
       tr
+        td = time_ago_in_words(uploaded_transaction.created_at, include_seconds: true)
         td = uploaded_transaction.full_address
         td = uploaded_transaction.listing_date
         td = uploaded_transaction.listing_price
