@@ -2,8 +2,8 @@ class Agent < ApplicationRecord
   has_many :uploaded_seller_transactions, class_name: "UploadedTransaction", foreign_key: :listing_agent_id
   has_many :uploaded_buyer_transactions, class_name: "UploadedTransaction", foreign_key: :selling_agent_id
 
-  def all_transactions
-    UploadedTransaction.where("listing_agent_id = ? OR selling_agent_id = ?", id, id) #
+  def all_transactions 
+    UploadedTransaction.where("listing_agent_id = ? OR selling_agent_id = ?", id, id)#.paginate(:page => page,:per_page => 3).order('id DESC')
   end
 
   def recent_transactions

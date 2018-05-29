@@ -17,6 +17,8 @@ gem "jquery-rails"
 gem "bootstrap"
 gem "pg", "~> 0.18"
 gem "faker", "~> 1.8"
+gem 'will_paginate', '~> 3.1.0'
+gem 'will_paginate-bootstrap'
 
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]

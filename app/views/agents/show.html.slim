@@ -1,19 +1,28 @@
+div 
+
 h1 = @agent.full_name
 p = @agent.bio
 
+table.table-sm
+  thead
+    tr
+      th Filter
+      th Action
+      th
+  tbody
+    tr
+      = form_tag import_agent_uploaded_transactions_path(@agent), multipart: true do
+      td = file_field_tag :file
+      td = submit_tag "Bulk Upload Transactions", class: "btn btn-primary"
+    tr  
+      td
+      td = link_to "Add Single Transaction", new_agent_uploaded_transaction_path(@agent), class: "btn btn-primary"
+    tr  
+      td
+      td = link_to "Download Transactions ", agent_path(@agent, :format => "csv"), class: "btn btn-primary"
 
-div 
-  = form_tag import_agent_uploaded_transactions_path(@agent), multipart: true do
-    = file_field_tag :file
-    = submit_tag "Bulk Upload Transactions", class: "btn btn-primary"
-= link_to "Add Single Transaction", new_agent_uploaded_transaction_path(@agent), class: "btn btn-primary"
-
-
-h3 Recent Transactions 
-= link_to "Download Transactions ", agent_path(@agent, :format => "csv")
-
-
-table
+h3 Recent Transactions         
+table.table-striped.table-hover.table-sm
   thead
     tr
       th Age
@@ -27,8 +36,15 @@ table
     - @uploaded_transactions.each do |uploaded_transaction|
       tr
         td = time_ago_in_words(uploaded_transaction.created_at, include_seconds: true)
-        td = uploaded_transaction.full_address
+        td = truncate(uploaded_transaction.full_address, :length => 44)
         td = uploaded_transaction.listing_date
         td = uploaded_transaction.listing_price
         td = uploaded_transaction.selling_date
         td = uploaded_transaction.selling_price
+        
+
+    
+.apple_pagination
+  .page_info
+    = page_entries_info @uploaded_transactions
+  = will_paginate @uploaded_transactions, :container => false
